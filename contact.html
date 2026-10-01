@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" class="js">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0b1020">
+<!-- SVG Favicon (Uses your exact SVG logo) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%234f46e5'/><stop offset='1' stop-color='%230ea5d9'/></linearGradient></defs><rect width='64' height='64' rx='16' fill='url(%23g)'/><path d='M17 20 L28 45 L37 28 L46 43' fill='none' stroke='%23fff' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/><circle cx='17' cy='20' r='4' fill='%23fff'/><circle cx='47' cy='44' r='5' fill='%23fff'/></svg>">
+
+<title>Contact – SaaS Via</title>
+<meta name="description" content="Get in touch with SaaS Via. Start a chat on WhatsApp or send us a message.">
+<style>
+/* ===== TOKENS (dark mode only) ===== */
+:root{
+  --bg:#0b1020;--card:#131a2e;--ink:#eef2ff;--muted:#a3adc7;--line:#232c47;
+  --a:#4f46e5;--b:#0ea5d9;--wa:#25d366;--wad:#128c4a;
+  --sb:#2a3557;--in:#222b47;--out:#d9fdd3;--outink:#0b2a12;
+  --pt:env(safe-area-inset-top,0px);--pb:env(safe-area-inset-bottom,0px);
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;scrollbar-width:thin;scrollbar-color:var(--sb) transparent}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--sb);border-radius:99px;border:2px solid var(--bg)}
+:root{padding-top:var(--pt);padding-bottom:var(--pb)}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{line-height:1.15;letter-spacing:-.02em}
+h1{font-size:clamp(2.1rem,6vw,3.6rem);font-weight:800; margin-bottom:.6rem;}
+h2{font-size:clamp(1.6rem,3.5vw,2.3rem);font-weight:750;margin-bottom:.6rem}
+p{color:var(--muted)}
+.wrap{max-width:1080px;margin:auto;padding:0 1.2rem}
+section{padding:4rem 0}
+.eyebrow{display:inline-block;font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--b);margin-bottom:.8rem}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);transition:box-shadow .3s,background .3s}
+.nav.scrolled{box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{display:flex;align-items:center;gap:.6rem;font-weight:800;font-size:1.1rem}
+.logo svg{width:32px;height:32px}
+.nav nav{display:flex;align-items:center;gap:1.4rem;font-size:.95rem;color:var(--muted)}
+.nav nav a:not(.btn){position:relative;transition:color .2s}
+.nav nav a:not(.btn):after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--a),var(--b));transform:scaleX(0);transition:transform .25s;transform-origin:left;}
+.nav nav a.active:not(.btn){color:var(--ink)}
+.nav nav a.active:not(.btn):after,.nav nav a:not(.btn):hover:after{transform:scaleX(1)}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;background:var(--wa);color:#04210f;font-weight:700;padding:.85rem 1.4rem;border-radius:12px;box-shadow:0 4px 0 var(--wad);transition:transform .12s,box-shadow .12s, background .2s; border:none; cursor:pointer; font:inherit;}
+.btn:hover{transform:translateY(2px);box-shadow:0 2px 0 var(--wad)}
+.btn-sm{padding:.5rem 1rem;font-size:.9rem}
+
+/* ===== CONTACT PAGE ===== */
+.contact-page { padding-top: 5rem; padding-bottom: 6rem; min-height: calc(100vh - 200px); }
+.contact-wrap { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 4rem; align-items: start; animation: pop .5s ease both; }
+.contact-info p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; }
+
+/* Status & Socials */
+.online { display: inline-flex; align-items: center; gap: .6rem; margin-bottom: 2rem; font-size: .9rem; font-weight: 600; color: var(--wad); background: color-mix(in srgb, var(--wa) 14%, transparent); border: 1px solid color-mix(in srgb, var(--wa) 35%, transparent); padding: .5rem 1.2rem; border-radius: 99px; }
+.online span { width: 10px; height: 10px; border-radius: 50%; background: var(--wa); box-shadow: 0 0 0 0 rgba(37,211,102,.6); animation: pulse 1.8s infinite; }
+@keyframes pulse { 70% { box-shadow: 0 0 0 9px rgba(37,211,102,0); } 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); } }
+
+.socials { display: flex; flex-direction: column; gap: .8rem; }
+.soc { display: flex; align-items: center; gap: 1rem; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: .8rem 1rem; transition: transform .2s, border-color .2s, box-shadow .2s; text-decoration: none; }
+.soc:hover { transform: translateY(-4px); border-color: var(--c); box-shadow: 0 10px 24px color-mix(in srgb, var(--c) 20%, transparent); }
+.soc i { flex: none; width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; color: #fff; transition: transform .3s; }
+.soc:hover i { transform: rotate(-8deg) scale(1.08); }
+.soc svg { width: 22px; height: 22px; }
+.soc span { display: flex; flex-direction: column; line-height: 1.3; }
+.soc strong { font-size: 1rem; color: var(--ink); font-weight: 600; }
+.soc small { font-size: .85rem; color: var(--muted); }
+.soc em { margin-left: auto; color: var(--muted); font-style: normal; font-size: 1.2rem; transition: transform .2s, color .2s; }
+.soc:hover em { transform: translateX(4px); color: var(--c); }
+
+/* Form */
+.form { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 2.2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; box-shadow: 0 20px 40px rgba(0,0,0,.12); animation: pop .6s ease both 100ms; }
+.form label { display: flex; flex-direction: column; gap: .4rem; font-size: .9rem; font-weight: 600; color: var(--ink); }
+.form .full { grid-column: 1 / -1; }
+.form input, .form select, .form textarea { font: inherit; font-size: 1rem; font-weight: 400; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: .85rem 1rem; width: 100%; transition: border-color 0.2s, outline 0.2s; }
+.form input::placeholder, .form textarea::placeholder { color: color-mix(in srgb, var(--muted) 60%, transparent); }
+.form input:focus, .form select:focus, .form textarea:focus { outline: 2px solid var(--b); outline-offset: 1px; border-color: transparent; }
+.form textarea { min-height: 110px; resize: vertical; }
+.form .btn { width: 100%; font-size: 1.05rem; padding: 1rem; margin-top: .5rem; }
+.form .note { font-size: .85rem; color: var(--muted); text-align: center; margin-top: -0.5rem; }
+.status { grid-column: 1 / -1; font-size: .95rem; color: var(--wad); font-weight: 600; min-height: 1.5em; text-align: center; }
+
+@keyframes pop{from{opacity:0;transform:translateY(20px)}}
+
+/* BURGER */
+.burger{display:none;width:44px;height:44px;background:none;border:0;cursor:pointer;flex-direction:column;justify-content:center;gap:5px;align-items:center}
+.burger span{width:22px;height:2px;background:var(--ink);border-radius:2px;transition:transform .2s,opacity .2s}
+.burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* WHATSAPP FLOAT */
+.wa-float{position:fixed;right:18px;bottom:calc(18px + var(--pb));z-index:30;display:flex;align-items:center;gap:.5rem;background:var(--wa);color:#04210f;font-weight:700;padding:.85rem 1.1rem;border-radius:99px;box-shadow:0 4px 0 var(--wad),0 10px 22px rgba(0,0,0,.3);animation:bob 3s ease-in-out infinite}
+.wa-float svg{width:24px;height:24px}
+@keyframes bob{50%{transform:translateY(-4px)}}
+
+/* FOOTER */
+footer{border-top:1px solid var(--line);padding:2rem 0 5rem;color:var(--muted);font-size:.9rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+
+#prog{position:fixed;top:0;left:0;right:0;height:3px;z-index:40;background:linear-gradient(90deg,var(--a),var(--b));transform:scaleX(0);transform-origin:left;pointer-events:none}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .contact-wrap { grid-template-columns: 1fr; gap: 3rem; }
+  .contact-info { max-width: 600px; margin: 0 auto; text-align: center; }
+  .socials { text-align: left; }
+}
+@media(max-width:800px){
+  .burger{display:flex}
+  .nav nav{position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;padding:.6rem 1.2rem 1rem;background:var(--bg);border-bottom:1px solid var(--line);display:none}
+  .nav nav.open{display:flex}
+  .nav nav a{padding:.8rem 0;font-size:1.05rem}
+  .nav nav .btn{margin-top:.4rem;justify-content:center}
+  .wa-float span{display:none}
+  .wa-float{padding:.9rem}
+}
+@media(max-width:600px){
+  .form { grid-template-columns: 1fr; padding: 1.5rem; }
+  .contact-page { padding-top: 3rem; }
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div id="prog" aria-hidden="true"></div>
+<header class="nav"><div class="wrap">
+  <a class="logo" href="/" aria-label="SaaS Via home">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4f46e5"/><stop offset="1" stop-color="#0ea5d9"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#g)"/><path d="M17 20 L28 45 L37 28 L46 43" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="17" cy="20" r="4" fill="#fff"/><circle cx="47" cy="44" r="5" fill="#fff"/></svg>
+    SaaS Via</a>
+  <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <nav id="menu">
+    <a href="/">How it works</a>
+    <a href="/blog.html">Blog</a>
+    <a href="/price.html">Price</a>
+    <a href="/contact.html" class="active">Contact</a>
+    <a class="btn btn-sm wa" href="#">Start chat</a>
+  </nav>
+</div></header>
+ 
+<main id="top">
+<section class="contact-page"><div class="wrap contact-wrap">
+  
+  <div class="contact-info">
+    <span class="eyebrow">Contact</span>
+    <h1>Get in touch</h1>
+    <p>Share a few details and we'll open WhatsApp with everything filled in, so the AI assistant already knows your business and can help you immediately.</p>
+    
+    <div class="online"><span></span>Online now · replies in seconds</div>
+    
+    <div class="socials">
+      <!-- WhatsApp (Main) -->
+      <a class="soc wa" style="--c:#25d366" href="#" target="_blank" rel="noopener">
+        <i style="background:#25d366"><svg viewBox="0 0 32 32"><path d="M16 4A12 12 0 0 0 5.700 22.200L4.500 27.500l5.500-1.300A12 12 0 1 0 16 4z" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"/><path d="M12.200 10.500c-1 .9-1 2.500.5 4.600 1.600 2.200 3.500 3.400 5 3.700 1 .3 1.900-.3 2.200-1.200l-1.900-1.100-.9.800c-1.200-.6-2.300-1.600-2.900-2.900l.8-.9-.8-3z" fill="#fff"/></svg></i>
+        <span><strong>WhatsApp</strong><small>Chat now</small></span>
+        <em>→</em>
+      </a>
+      
+      <!-- Email -->
+      <a class="soc" style="--c:#ea4335" href="mailto:hello@saasvia.com" target="_blank" rel="noopener">
+        <i style="background:linear-gradient(135deg,#ea4335,#fbbc04)"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.500"/><path d="M3.500 7.500L12 13.500l8.500-6"/></svg></i>
+        <span><strong>Email</strong><small>hello@saasvia.com</small></span>
+        <em>→</em>
+      </a>
+
+      <!-- LinkedIn -->
+      <a class="soc" style="--c:#0a66c2" href="https://linkedin.com/company/saasvia" target="_blank" rel="noopener">
+        <i style="background:#0a66c2"><svg viewBox="0 0 24 24" fill="#fff"><circle cx="6.500" cy="6.500" r="1.900"/><rect x="4.800" y="10" width="3.400" height="9.500" rx=".6"/><path d="M11 10h3.200v1.400c.5-.9 1.600-1.700 3.100-1.700 2.800 0 3.700 1.800 3.700 4.300v5.500h-3.300v-4.900c0-1.200-.4-2-1.500-2-1.200 0-1.900.9-1.900 2.100v4.800H11z"/></svg></i>
+        <span><strong>LinkedIn</strong><small>SaaS Via</small></span>
+        <em>→</em>
+      </a>
+
+   <!-- Instagram -->
+  <a class="soc" style="--c:#ee2a7b" href="https://instagram.com/saasvia" target="_blank" rel="noopener">
+  <i style="background:linear-gradient(45deg,#f9ce34,#ee2a7b 55%,#6228d7)"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3.500" y="3.500" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.800"/><circle cx="17.200" cy="6.800" r="1" fill="#fff" stroke="none"/></svg></i>
+  <span><strong>Instagram</strong><small>@saasvia</small></span>
+  <em>→</em>
+    </a>
+    </div>
+  </div>
+
+  <form class="form" id="form" novalidate>
+    <label>Your name<input name="name" autocomplete="name" required placeholder="Ahmed Khan"></label>
+    <label>WhatsApp number<input name="phone" type="tel" autocomplete="tel" required placeholder="0300 1234567"></label>
+    <label>Email (optional)<input name="email" type="email" autocomplete="email" placeholder="you@business.com"></label>
+    <label>Business type
+      <select name="type" required>
+        <option value="">Choose one</option>
+        <option>Subscription / SaaS</option>
+        <option>Digital products</option>
+        <option>Online store</option>
+        <option>Services / agency</option>
+        <option>Other</option>
+      </select>
+    </label>
+    <label class="full">Monthly budget for tools (optional)<input name="budget" placeholder="e.g. 5000 PKR"></label>
+    <label class="full">What do you need help with?<textarea name="msg" required placeholder="e.g. I handle follow-ups manually and lose leads."></textarea></label>
+    
+    <button class="btn full" type="submit">Open WhatsApp Chat</button>
+    <p class="note full">We only use your details to open the chat for you.</p>
+    <div class="status" id="status" role="status"></div>
+  </form>
+
+</div></section>
+</main>
+ 
+<footer><div class="wrap">
+  <span>© <span id="yr"></span> SaaS Via · saasvia.com</span>
+  <span><a href="/">How it works</a> · <a href="/blog.html">Blog</a></span>
+</div></footer>
+ 
+<a class="wa-float wa" href="#" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 32 32" fill="none" stroke="#04210f" stroke-width="2.4" stroke-linejoin="round" aria-hidden="true"><path d="M16 3A13 13 0 0 0 4.800 22.600L3 29l6.600-1.800A13 13 0 1 0 16 3z"/></svg>
+  <span>Chat now</span>
+</a>
+
+<script>
+// --- CONFIG ---
+const NUMBER = "923001234567"; // Replace with your real WhatsApp number
+const BASE_MESSAGE = "Hi! I'd like help growing my online product.";
+const waLink = "https://wa.me/" + NUMBER + "?text=" + encodeURIComponent(BASE_MESSAGE);
+
+// Bind general WhatsApp buttons
+document.querySelectorAll(".wa").forEach(a => { a.href = waLink; a.target = "_blank"; a.rel = "noopener"; });
+document.getElementById("yr").textContent = new Date().getFullYear();
+
+// --- FORM LOGIC ---
+// This intercepts the form, formats the message, and opens WhatsApp
+document.getElementById("form").addEventListener("submit", e => {
+  e.preventDefault();
+  const f = e.target;
+  const st = document.getElementById("status");
+
+  if (!f.checkValidity()) {
+    f.reportValidity();
+    return;
+  }
+
+  st.textContent = "Opening WhatsApp...";
+  st.style.color = "var(--ink)";
+
+  // Grab data
+  const data = Object.fromEntries(new FormData(f));
+  
+  // Format the WhatsApp message based on form inputs
+  let waMsg = `Hi SaaS Via! I'm ${data.name}.\n\n`;
+  waMsg += `*Business Type:* ${data.type}\n`;
+  if (data.budget) waMsg += `*Budget:* ${data.budget}\n`;
+  waMsg += `\n*Here is what I need help with:*\n${data.msg}`;
+
+  // Redirect to WhatsApp
+  const finalLink = "https://wa.me/" + NUMBER + "?text=" + encodeURIComponent(waMsg);
+  window.open(finalLink, '_blank');
+
+  // Reset UI after a delay
+  setTimeout(() => {
+    st.textContent = "Chat opened in new tab!";
+    st.style.color = "var(--wad)";
+    f.reset();
+  }, 2000);
+});
+
+// --- MOBILE MENU ---
+const burger = document.getElementById("burger"), menu = document.getElementById("menu");
+burger.addEventListener("click", () => burger.setAttribute("aria-expanded", menu.classList.toggle("open")));
+menu.addEventListener("click", e => { if (e.target.closest("a")) { menu.classList.remove("open"); burger.setAttribute("aria-expanded", false); } });
+ 
+// --- SCROLL PROGRESS & NAV SHADOW ---
+const prog = document.getElementById("prog"), nav = document.querySelector(".nav");
+let tick = false;
+addEventListener("scroll", () => {
+  if (tick) return; tick = true;
+  requestAnimationFrame(() => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    prog.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+    nav.classList.toggle("scrolled", scrollY > 10);
+    tick = false;
+  });
+}, { passive: true });
+</script>
+</body>
+</html>
