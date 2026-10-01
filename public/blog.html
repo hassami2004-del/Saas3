@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en" class="js">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0b1020">
+<!-- SVG Favicon (Uses your exact SVG logo) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%234f46e5'/><stop offset='1' stop-color='%230ea5d9'/></linearGradient></defs><rect width='64' height='64' rx='16' fill='url(%23g)'/><path d='M17 20 L28 45 L37 28 L46 43' fill='none' stroke='%23fff' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/><circle cx='17' cy='20' r='4' fill='%23fff'/><circle cx='47' cy='44' r='5' fill='%23fff'/></svg>">
+
+<title>SaaS Via Journal – Growth notes for builders</title>
+<meta name="description" content="Short, practical guides you can act on today. Learn about automation, CRM, and growth for your SaaS.">
+<style>
+/* ===== TOKENS (dark mode only) ===== */
+:root{
+  --bg:#0b1020;--card:#131a2e;--ink:#eef2ff;--muted:#a3adc7;--line:#232c47;
+  --a:#4f46e5;--b:#0ea5d9;--wa:#25d366;--wad:#128c4a;
+  --sb:#2a3557;--in:#222b47;--out:#d9fdd3;--outink:#0b2a12;
+  --pt:env(safe-area-inset-top,0px);--pb:env(safe-area-inset-bottom,0px);
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;scrollbar-width:thin;scrollbar-color:var(--sb) transparent}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--sb);border-radius:99px;border:2px solid var(--bg)}
+:root{padding-top:var(--pt);padding-bottom:var(--pb)}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{line-height:1.15;letter-spacing:-.02em}
+h1{font-size:clamp(2.1rem,6vw,3.6rem);font-weight:800; margin-bottom:.6rem;}
+h2{font-size:clamp(1.6rem,3.5vw,2.3rem);font-weight:750;margin-bottom:.6rem}
+p{color:var(--muted)}
+.wrap{max-width:1080px;margin:auto;padding:0 1.2rem}
+section{padding:4rem 0}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);transition:box-shadow .3s,background .3s}
+.nav.scrolled{box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{display:flex;align-items:center;gap:.6rem;font-weight:800;font-size:1.1rem}
+.logo svg{width:32px;height:32px}
+.nav nav{display:flex;align-items:center;gap:1.4rem;font-size:.95rem;color:var(--muted)}
+.nav nav a:not(.btn){position:relative;transition:color .2s}
+.nav nav a:not(.btn):after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--a),var(--b));transform:scaleX(0);transition:transform .25s;transform-origin:left;}
+.nav nav a.active:not(.btn){color:var(--ink)}
+.nav nav a.active:not(.btn):after,.nav nav a:not(.btn):hover:after{transform:scaleX(1)}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--wa);color:#04210f;font-weight:700;padding:.85rem 1.4rem;border-radius:12px;box-shadow:0 4px 0 var(--wad);transition:transform .12s,box-shadow .12s}
+.btn:hover{transform:translateY(2px);box-shadow:0 2px 0 var(--wad)}
+.btn-sm{padding:.5rem 1rem;font-size:.9rem}
+
+/* ===== BLOG PAGE SPECIFIC ===== */
+.blog-page{padding-top: 3rem; padding-bottom: 6rem;}
+.blog-header-content { max-width: 600px; margin-bottom: 2.5rem; }
+.blog-header-content p { font-size: 1.15rem; }
+.eyebrow{display:inline-block;font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--b);margin-bottom:.8rem}
+
+.filters{display:flex;flex-wrap:wrap;gap:.6rem; margin-bottom: 2.5rem;}
+.filters button{font:600 .9rem system-ui;color:var(--muted);background:var(--card);border:1px solid transparent;padding:.5rem 1.1rem;border-radius:99px;cursor:pointer;transition:.2s}
+.filters button:hover{background:var(--line);color:var(--ink)}
+.filters button[aria-selected="true"]{background:linear-gradient(135deg,var(--a),var(--b));color:#fff;border-color:transparent}
+
+.bgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem}
+.pc{display:flex;flex-direction:column;text-align:left;font:inherit;color:inherit;padding:0;overflow:hidden;cursor:pointer;width:100%;
+  background:var(--card);border:1px solid var(--line);border-radius:20px;transition:transform .25s,box-shadow .25s,border-color .25s;animation:pop .4s ease both}
+.pc:hover{transform:translateY(-6px);box-shadow:0 24px 40px rgba(79,70,229,.18);border-color:color-mix(in srgb,var(--b) 60%,var(--line))}
+.cover{position:relative;height:180px;display:grid;place-items:center;overflow:hidden;background:var(--g)}
+.cover:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 20%,rgba(255,255,255,.35),transparent 40%),radial-gradient(rgba(255,255,255,.22) 1.5px,transparent 1.5px) 0 0/16px 16px}
+.cover:after{content:"";position:absolute;width:140px;height:140px;border-radius:32px;background:rgba(255,255,255,.16);right:-30px;bottom:-50px;transform:rotate(24deg)}
+.cover b{position:relative;z-index:1;font-size:3.5rem;filter:drop-shadow(0 8px 12px rgba(0,0,0,.25));transition:transform .3s}
+.pc:hover .cover b{transform:scale(1.15) rotate(-6deg)}
+.chip{position:absolute;z-index:2;left:18px;top:18px;font:700 .75rem system-ui;color:#fff;background:rgba(0,0,0,.28);backdrop-filter:blur(6px);padding:.3rem .8rem;border-radius:99px}
+.pb{display:flex;flex-direction:column;flex:1;padding:1.5rem}
+.meta{font-size:.85rem;color:var(--muted);margin-bottom:.6rem}
+.pb h3{font-size:1.2rem;margin-bottom:.5rem; line-height: 1.3;}
+.pb p{font-size:.95rem;flex:1}
+.more{margin-top:1rem;font-weight:700;font-size:.95rem;color:var(--b)}
+.more span{display:inline-block;transition:transform .2s}
+.pc:hover .more span{transform:translateX(5px)}
+
+/* featured post */
+.pc.feat{grid-column:1/-1;flex-direction:row; margin-bottom: 1rem;}
+.feat .cover{height:auto;min-height:320px;flex:1.1}
+.feat .cover b{font-size:6rem}
+.feat .pb{flex:1;justify-content:center;padding:3rem}
+.feat .pb h3{font-size:clamp(1.6rem,2.8vw,2.2rem); margin-bottom: 1rem;}
+.feat .pb p{flex:0;font-size:1.05rem; margin-bottom: 1.5rem;}
+.empty{grid-column:1/-1;text-align:center;padding:4rem 2rem; color: var(--muted); background: var(--card); border-radius: 20px; border: 1px dashed var(--line);}
+ 
+@keyframes pop{from{opacity:0;transform:translateY(15px)}}
+
+/* BURGER */
+.burger{display:none;width:44px;height:44px;background:none;border:0;cursor:pointer;flex-direction:column;justify-content:center;gap:5px;align-items:center}
+.burger span{width:22px;height:2px;background:var(--ink);border-radius:2px;transition:transform .2s,opacity .2s}
+.burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* WHATSAPP FLOAT */
+.wa-float{position:fixed;right:18px;bottom:calc(18px + var(--pb));z-index:30;display:flex;align-items:center;gap:.5rem;background:var(--wa);color:#04210f;font-weight:700;padding:.85rem 1.1rem;border-radius:99px;box-shadow:0 4px 0 var(--wad),0 10px 22px rgba(0,0,0,.3);animation:bob 3s ease-in-out infinite}
+.wa-float svg{width:24px;height:24px}
+@keyframes bob{50%{transform:translateY(-4px)}}
+
+/* FOOTER */
+footer{border-top:1px solid var(--line);padding:2rem 0 5rem;color:var(--muted);font-size:.9rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+
+#prog{position:fixed;top:0;left:0;right:0;height:3px;z-index:40;background:linear-gradient(90deg,var(--a),var(--b));transform:scaleX(0);transform-origin:left;pointer-events:none}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .bgrid{grid-template-columns:repeat(2,1fr)}
+  .pc.feat{flex-direction:column}
+  .feat .cover{min-height:220px}
+  .feat .pb{padding: 2rem;}
+}
+@media(max-width:800px){
+  .burger{display:flex}
+  .nav nav{position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;padding:.6rem 1.2rem 1rem;background:var(--bg);border-bottom:1px solid var(--line);display:none}
+  .nav nav.open{display:flex}
+  .nav nav a{padding:.8rem 0;font-size:1.05rem}
+  .nav nav .btn{margin-top:.4rem;justify-content:center}
+  .wa-float span{display:none}
+  .wa-float{padding:.9rem}
+}
+@media(max-width:560px){
+  .bgrid{grid-template-columns:1fr}
+  .blog-page{padding-top: 2rem;}
+  h1 {font-size: 2.2rem;}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div id="prog" aria-hidden="true"></div>
+<header class="nav"><div class="wrap">
+  <a class="logo" href="/" aria-label="SaaS Via home">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4f46e5"/><stop offset="1" stop-color="#0ea5d9"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#g)"/><path d="M17 20 L28 45 L37 28 L46 43" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="17" cy="20" r="4" fill="#fff"/><circle cx="47" cy="44" r="5" fill="#fff"/></svg>
+    SaaS Via</a>
+  <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <nav id="menu">
+    <a href="/">How it works</a>
+    <a href="/blog" class="active">Blog</a>
+    <a href="/price.html">Price</a>
+    <a href="/contact.html">Contact</a>
+    <a class="btn btn-sm wa" href="#">Start chat</a>
+  </nav>
+</div></header>
+ 
+<main id="top">
+<section class="blog-page"><div class="wrap">
+  
+  <div class="blog-header-content">
+    <span class="eyebrow">The SaaS Via Journal</span>
+    <h1>Growth notes for builders</h1>
+    <p>Short, practical guides you can act on today.</p>
+  </div>
+
+  <div class="filters" id="filters" role="tablist" aria-label="Blog categories">
+    <!-- JS will populate these buttons -->
+  </div>
+  
+  <div id="posts" class="bgrid">
+    <!-- JS will populate posts here -->
+  </div>
+
+</div></section>
+</main>
+ 
+<footer><div class="wrap">
+  <span>© <span id="yr"></span> SaaS Via · saasvia.com</span>
+  <span><a href="/">How it works</a> · <a href="/blog">Blog</a></span>
+</div></footer>
+ 
+<a class="wa-float wa" href="#" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 32 32" fill="none" stroke="#04210f" stroke-width="2.4" stroke-linejoin="round" aria-hidden="true"><path d="M16 3A13 13 0 0 0 4.800 22.600L3 29l6.600-1.800A13 13 0 1 0 16 3z"/></svg>
+  <span>Chat now</span>
+</a>
+
+<script>
+// --- CONFIG ---
+const NUMBER = "923001234567";
+const MESSAGE = "Hi! I'd like help growing my online product.";
+const waLink = "https://wa.me/" + NUMBER + "?text=" + encodeURIComponent(MESSAGE);
+
+// Bind WhatsApp buttons
+document.querySelectorAll(".wa").forEach(a => { a.href = waLink; a.target = "_blank"; a.rel = "noopener"; });
+document.getElementById("yr").textContent = new Date().getFullYear();
+
+// --- POST DATA (From your existing setup) ---
+const POSTS = [
+  { title: "n8n vs Zapier vs Make: Which Automation Tool Fits Your Small Business?", cat: "Automation", date: "Sep 30, 2026", read: 3, icon: "⚙️", g: "linear-gradient(135deg,#4f46e5,#0ea5d9)", url: "#",
+    excerpt: "Three popular automation tools compared, with a simple guide to which one suits your team." },
+  { title: "Best CRM Software for Small Businesses: How to Choose", cat: "CRM", date: "Sep 28, 2026", read: 4, icon: "🤝", g: "linear-gradient(135deg,#f59e0b,#ef4444)", url: "#",
+    excerpt: "Keep every lead and deal in one place without overpaying for features you don't need." },
+  { title: "Best Email Marketing Tools for Beginners", cat: "Email", date: "Sep 26, 2026", read: 3, icon: "✉️", g: "linear-gradient(135deg,#10b981,#0ea5d9)", url: "#",
+    excerpt: "What to look for, a quick setup plan, and the mistakes most beginners make." },
+  { title: "How to Choose the Right SaaS Tool for Your Budget", cat: "Buying Guide", date: "Sep 24, 2026", read: 4, icon: "🧭", g: "linear-gradient(135deg,#ec4899,#8b5cf6)", url: "#",
+    excerpt: "A simple 7-step process to pick software without wasting money." },
+  { title: "7 Business Tasks You Can Automate Today", cat: "Automation", date: "Sep 22, 2026", read: 3, icon: "🤖", g: "linear-gradient(135deg,#6366f1,#22d3ee)", url: "#",
+    excerpt: "From lead capture to weekly reports, save hours by automating repetitive work." },
+  { title: "SaaS Stack for a Startup: What You Actually Need", cat: "Startup", date: "Sep 20, 2026", read: 4, icon: "🧱", g: "linear-gradient(135deg,#14b8a6,#3b82f6)", url: "#",
+    excerpt: "A lean stack built in three stages, so you don't buy too many tools too early." },
+  { title: "Best Project Management Tools for Small Teams", cat: "Productivity", date: "Sep 18, 2026", read: 3, icon: "📋", g: "linear-gradient(135deg,#8b5cf6,#ec4899)", url: "#",
+    excerpt: "Features that matter, which style fits your team, and how to roll it out." },
+  { title: "Best Website Builders and Hosting for Small Business", cat: "Website", date: "Sep 16, 2026", read: 4, icon: "🌐", g: "linear-gradient(135deg,#0ea5d9,#4f46e5)", url: "#",
+    excerpt: "Website builder or hosting with a CMS? How to choose and what to check before you buy." }
+];
+ 
+// --- RENDER LOGIC ---
+const postsEl = document.getElementById("posts"), filtersEl = document.getElementById("filters");
+const cats = ["All", ...new Set(POSTS.map(p => p.cat))];
+let active = "All";
+ 
+function card(p, i, feat) {
+  return `<a class="pc ${feat ? "feat" : ""}" href="${p.url}" style="animation-delay:${i * 40}ms">
+    <div class="cover" style="--g:${p.g}"><span class="chip">${p.cat}</span><b aria-hidden="true">${p.icon}</b></div>
+    <div class="pb"><div class="meta">${p.date} · ${p.read} min read</div><h3>${p.title}</h3><p>${p.excerpt}</p>
+    <div class="more">Read article <span>→</span></div></div></a>`;
+}
+
+function renderPosts() {
+  const list = POSTS.map((p, i) => ({ p, i })).filter(x => active === "All" || x.p.cat === active);
+  postsEl.innerHTML = list.length ? list.map((x, k) => card(x.p, x.i, k === 0 && list.length > 1)).join("") : `<p class="empty">No posts found in this category.</p>`;
+}
+
+function renderFilters() {
+  filtersEl.innerHTML = cats.map(c => `<button role="tab" aria-selected="${c === active}" data-c="${c}">${c}</button>`).join("");
+}
+
+// Handle Filter Clicks
+filtersEl.addEventListener("click", e => { 
+  const b = e.target.closest("button"); 
+  if (!b) return; 
+  active = b.dataset.c; 
+  renderFilters(); 
+  renderPosts(); 
+});
+
+// Initial Render
+renderFilters(); 
+renderPosts();
+ 
+// --- MOBILE MENU ---
+const burger = document.getElementById("burger"), menu = document.getElementById("menu");
+burger.addEventListener("click", () => burger.setAttribute("aria-expanded", menu.classList.toggle("open")));
+menu.addEventListener("click", e => { if (e.target.closest("a")) { menu.classList.remove("open"); burger.setAttribute("aria-expanded", false); } });
+ 
+// --- SCROLL PROGRESS & NAV SHADOW ---
+const prog = document.getElementById("prog"), nav = document.querySelector(".nav");
+let tick = false;
+addEventListener("scroll", () => {
+  if (tick) return; tick = true;
+  requestAnimationFrame(() => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    prog.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+    nav.classList.toggle("scrolled", scrollY > 10);
+    tick = false;
+  });
+}, { passive: true });
+</script>
+</body>
+</html>
